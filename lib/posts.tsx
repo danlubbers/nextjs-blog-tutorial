@@ -7,6 +7,11 @@ import html from "remark-html";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
+interface matterResultProps {
+  title: string;
+  date: string;
+}
+
 export const getSortedPostsData = () => {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory);
@@ -22,7 +27,7 @@ export const getSortedPostsData = () => {
     const matterResult = matter(fileContents);
 
     // Combine the data with the id
-    return { id, ...matterResult.data };
+    return { id, ...(matterResult.data as matterResultProps) };
   });
 
   // Sort posts by date
